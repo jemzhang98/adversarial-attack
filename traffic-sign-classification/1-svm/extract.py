@@ -5,8 +5,11 @@ from feature_extractor import extract_features_and_save
 
 def main(args):
     if args.train_dir:
-        train_files = os.listdir(args.train_dir)
-        train_files = [os.path.join(args.train_dir, f) for f in train_files]
+        train_dirs = [os.path.join(args.train_dir, f) for f in os.listdir(args.train_dir)]
+        train_files = []
+        for subDir in train_dirs:
+            for file in os.listdir(subDir):
+                train_files.append(os.path.join(subDir, file))
         extract_features_and_save(train_files, os.path.join(args.output_dir, 'train'))
 
     if args.test_dir:
