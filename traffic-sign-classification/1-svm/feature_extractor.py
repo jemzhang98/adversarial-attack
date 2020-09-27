@@ -18,9 +18,14 @@ def extract_features(filenames) -> (np.ndarray, np.ndarray, np.ndarray, np.ndarr
     feat_hog3 = np.empty((n_sample, 2916))
 
     for index in trange(n_sample):
+        #cv2 reads images in BGR order (not RGB)
         img: np.ndarray = cv2.imread(filenames[index])
+        #changes to grayscale by calculating average of each pixel & rescale image to 28 & 40 pixels
+        #does not cut out any of the image
         img_gray1: np.ndarray = cv2.cvtColor(cv2.resize(img, (28, 28)), cv2.COLOR_BGR2GRAY)
         img_gray2: np.ndarray = cv2.cvtColor(cv2.resize(img, (40, 40)), cv2.COLOR_BGR2GRAY)
+        #cv2.imshow('title'. img) #could show image
+        #cv2.waitKey(0) #keep image up indefinitely
 
         phog = calc_phog(img_gray1, 12, grids_y, grids_x, weights)
         hog1 = calc_hog1(img_gray2)
