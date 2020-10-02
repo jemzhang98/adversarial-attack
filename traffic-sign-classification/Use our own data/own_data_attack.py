@@ -24,8 +24,6 @@ from sklearn.svm import SVC
 from sklearn.utils import shuffle
 from sklearn.preprocessing import normalize
 
-
-
 tf.compat.v1.disable_eager_execution()
 
 # Configure a logger to capture ART outputs; these are printed in console and the level of detail is set to INFO
@@ -38,20 +36,21 @@ logger.addHandler(handler)
 
 # Read CIFAR10 dataset
 
-DATADIR = "Testimage"
-CATEGORIES = ["i2","i4"]
+DATADIR = os.path.dirname(os.path.split(os.getcwd())[0]) + r"\Data\Train"
+CATEGORIES = ["i2", "i4"]
 
 for categories in CATEGORIES:
-    path = os.path.join(DATADIR,categories)
+    path = os.path.join(DATADIR, categories)
     for img in os.listdir(path):
-        img_array = cv2.imread(os.path.join(path,img),cv2.IMREAD_GRAYSCALE)
-        plt.imshow(img_array,cmap = "gray")
-        plt.show()
+        img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
+        # plt.imshow(img_array, cmap="gray")
+        # plt.show()
         break
     break
 
-training_data=[]
+training_data = []
 IMG_SIZE = 50
+
 
 def create_training_data():
     for categories in CATEGORIES:
@@ -60,10 +59,11 @@ def create_training_data():
         for img in os.listdir(path):
             try:
                 img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
-                new_array = cv2.resize(img_array, (IMG_SIZE,IMG_SIZE))
-                training_data.append([new_array,class_num])
+                new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
+                training_data.append([new_array, class_num])
             except Exception as e:
                 pass
+
 
 create_training_data()
 
@@ -78,19 +78,14 @@ for features, label in training_data:
     X.append(features)
     y.append(label)
 
-X = np.array(X).reshape(-1,IMG_SIZE,IMG_SIZE, 1)
-X = X/255
+X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1)
+X = X / 255
 
-x_train,x_test,y_train,y_test = train_test_split(X,y, test_size=0.20)
-print('x_train',x_train)
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+print('x_train', x_train)
 min_ = 0
 max_ = 1
 im_shape = x_train[0].shape
-
-
-
-
-
 
 # dataset_info = datasets.load_files(args.train_dir, None, None, False, False)
 #     raw_features = load_all_features(file_path=args.feat_dir, combined=True)
@@ -118,11 +113,10 @@ im_shape = x_train[0].shape
 #         X_test_n = normalize(X_test)
 
 
-#(x_train, y_train), (x_test, y_test), min_, max_ = img_array
-#x_train, y_train = x_train[:50], y_train[:50]
-#x_test, y_test = x_test[:5], y_test[:5]
-#im_shape = x_train[0].shape
-
+# (x_train, y_train), (x_test, y_test), min_, max_ = img_array
+# x_train, y_train = x_train[:50], y_train[:50]
+# x_test, y_test = x_test[:5], y_test[:5]
+# im_shape = x_train[0].shape
 
 
 # Create Keras convolutional neural network - basic architecture from Keras examples
@@ -182,4 +176,3 @@ preds = np.argmax(classifier.predict(x_test_adv), axis=1)
 acc = np.sum(preds == np.argmax(y_test, axis=1)) / y_test.shape[0]
 logger.info("Classifier with adversarial training")
 logger.info("Accuracy on adversarial samples: %.2f%%", (acc * 100))
-
