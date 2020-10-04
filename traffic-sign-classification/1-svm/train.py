@@ -13,7 +13,7 @@ from sklearn.decomposition import PCA
 
 """
 code to run train.py
-python3 train.py --train_dir ../../Data/Train --feat_dir ./features/train --save_dir ./[your_name]
+python3 train.py --train_dir ../../Data/Train --feat_dir ./features/train --save_dir ./save
 """
 
 def main(args):
@@ -30,25 +30,25 @@ def main(args):
     del raw_features
 
     # PCA dimension reduction
-    pca = PCA(n_components=100)
-    pca.fit(X_train_raw)
-    X_train_n = pca.transform(X_train_raw)
-    X_test_n = pca.transform(X_train_raw)
+    # pca = PCA(n_components=100)
+    # pca.fit(X_train_raw)
+    # X_train_n = pca.transform(X_train_raw)
+    # X_test_n = pca.transform(X_train_raw)
 
 
-    # # LDA dimension reduction
-    # lda = LinearDiscriminantAnalysis(solver='eigen', shrinkage='auto', n_components=18)
-    # X_train = lda.fit_transform(X_train_raw, y_train)
-    # del X_train_raw
+    # LDA dimension reduction
+    lda = LinearDiscriminantAnalysis(solver='eigen', shrinkage='auto', n_components=18)
+    X_train = lda.fit_transform(X_train_raw, y_train)
+    del X_train_raw
 
-    # if args.validate:
-    #     X_test = lda.transform(X_test_raw)
-    #     del X_test_raw
+    if args.validate:
+        X_test = lda.transform(X_test_raw)
+        del X_test_raw
 
-    # # Normalize features
-    # X_train_n = normalize(X_train)
-    # if args.validate:
-    #     X_test_n = normalize(X_test)
+    # Normalize features
+    X_train_n = normalize(X_train)
+    if args.validate:
+        X_test_n = normalize(X_test)
 
     # Train classifier
     classifier = OneVsRestClassifier(SVC())
@@ -60,7 +60,7 @@ def main(args):
     # Save model
     if not os.path.exists(args.save_dir):
         os.makedirs(args.save_dir)
-    joblib.dump(pca, os.path.join(args.save_dir, 'pca.model'))
+    joblib.dump(lda, os.path.join(args.save_dir, 'lda.model'))
     joblib.dump(classifier, os.path.join(args.save_dir, 'svm.model'))
 
 
