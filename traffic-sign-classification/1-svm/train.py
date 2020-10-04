@@ -12,7 +12,12 @@ from sklearn.utils import shuffle
 from sklearn.preprocessing import normalize
 from art.estimators.classification import SklearnClassifier
 from feature_extractor import load_all_features
+from sklearn.decomposition import PCA
 
+"""
+code to run train.py
+python3 train.py --train_dir ../../Data/Train --feat_dir ./features/train --save_dir ./save
+"""
 
 def main(args):
     # Load data
@@ -30,6 +35,13 @@ def main(args):
         X_train_raw, y_train = shuffle(raw_features, dataset_info.target, random_state=args.random_state)
 
     del raw_features
+
+    # PCA dimension reduction
+    # pca = PCA(n_components=100)
+    # pca.fit(X_train_raw)
+    # X_train_n = pca.transform(X_train_raw)
+    # X_test_n = pca.transform(X_train_raw)
+
 
     # LDA dimension reduction
     print('Reducing image dimention, this may take a few minutes...')

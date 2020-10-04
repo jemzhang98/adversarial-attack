@@ -2,6 +2,10 @@ import os
 from argparse import ArgumentParser
 from feature_extractor import extract_features_and_save
 
+"""
+code to run extract.py:
+python3 extract.py --train_dir ../../Data/Train --test_dir ../../Data/Test
+"""
 
 def main(args):
     reducedDir = ['i4', 'pl30', 'pl80', 'w57']

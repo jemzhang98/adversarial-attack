@@ -7,11 +7,16 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.preprocessing import normalize
 
+"""
+code to run:
+python3 predict.py --test_dir ../../Data/Test --test_feat_dir ./features/test --model_dir ./save --output_dir ./result
+"""
 
 def main(args):
     labels = ['i2', 'i4', 'i5', 'io', 'ip', 'p11', 'p23', 'p26', 'p5', 'pl30',
               'pl40', 'pl5', 'pl50', 'pl60', 'pl80', 'pn', 'pne', 'po', 'w57']
     lda: LinearDiscriminantAnalysis = joblib.load(os.path.join(args.model_dir, 'lda.model'))
+    # pca: PCA = joblib.load(os.path.join(args.model_dir, 'pca.model'))
     classifier: OneVsRestClassifier = joblib.load(os.path.join(args.model_dir, 'svm.model'))
     X_test_raw = load_all_features(file_path=args.test_feat_dir, combined=True)
     X_test = lda.transform(X_test_raw)
