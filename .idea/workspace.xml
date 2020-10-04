@@ -25,13 +25,44 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="89aece69-3359-4f03-a2de-0932407210f9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/traffic-sign-classification/3-attack/fgsm.py" beforeDir="false" afterPath="$PROJECT_DIR$/traffic-sign-classification/3-attack/fgsm_cnn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/traffic-sign-classification/Use our own data/own_data_attack.py" beforeDir="false" afterPath="$PROJECT_DIR$/traffic-sign-classification/3-attack/deepfool_cnn.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/test/feat_hog1.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/test/feat_hog2.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/test/feat_hog3.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/test/feat_intensity.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/test/feat_phog.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/train/feat_hog1.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/train/feat_hog2.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/train/feat_hog3.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/train/feat_intensity.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/Reduced Features/train/feat_phog.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/test/feat_hog1.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/test/feat_hog2.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/test/feat_hog3.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/test/feat_intensity.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/test/feat_phog.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/train/feat_hog1.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/train/feat_hog2.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/train/feat_hog3.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/train/feat_intensity.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/Features/train/feat_phog.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/3-attack/Generated Adversarial Data/uni_fgsm_svm_adv.npy" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/traffic-sign-classification/3-attack/fgsm_svm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/traffic-sign-classification/1-svm/extract.py" beforeDir="false" afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/extract.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/traffic-sign-classification/1-svm/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/traffic-sign-classification/1-svm/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,6 +79,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
@@ -56,29 +88,8 @@
       <recent name="C:\Users\jungc\Documents\GitHub\adversarial-attack\ART Tests\Models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.deepfool_cnn">
-    <configuration name="attack_mnist_sklearn_model_uni_att" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="adversarial-attack" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Users\jungc\AppData\Local\Programs\Python\Python38\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ART Tests" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ART Tests/attack_mnist_sklearn_model_uni_att.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="attack_mnist_sklearn_model_zoo_att" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.fgsm_svm">
+    <configuration name="attack_mnist_sklearn_model_square_att" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="adversarial-attack" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -90,7 +101,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ART Tests/attack_mnist_sklearn_model_zoo_att.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ART Tests/attack_mnist_sklearn_model_square_att.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -99,7 +110,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="deepfool_cnn" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="deepfool_cnn (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="adversarial-attack" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -107,11 +118,74 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/traffic-sign-classification/Use our own data" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/traffic-sign-classification/3-attack" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\jungc\Documents\GitHub\adversarial-attack\traffic-sign-classification\3-attack\deepfool_cnn.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/traffic-sign-classification/3-attack/deepfool_cnn.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="extract" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="adversarial-attack" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/traffic-sign-classification/1-svm" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/traffic-sign-classification/1-svm/extract.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="fgsm_svm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="adversarial-attack" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/traffic-sign-classification/3-attack" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/traffic-sign-classification/3-attack/fgsm_svm.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="adversarial-attack" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/traffic-sign-classification/1-svm" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/traffic-sign-classification/1-svm/train.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -122,9 +196,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.deepfool_cnn" />
-        <item itemvalue="Python.attack_mnist_sklearn_model_zoo_att" />
-        <item itemvalue="Python.attack_mnist_sklearn_model_uni_att" />
+        <item itemvalue="Python.fgsm_svm" />
+        <item itemvalue="Python.attack_mnist_sklearn_model_square_att" />
+        <item itemvalue="Python.train" />
+        <item itemvalue="Python.deepfool_cnn (1)" />
+        <item itemvalue="Python.extract" />
       </list>
     </recent_temporary>
   </component>
@@ -162,38 +238,42 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="482" y="214" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1601676279532" />
-    <state width="1515" height="248" key="GridCell.Tab.0.bottom" timestamp="1601677278525">
+    <state width="1534" height="440" key="DebuggerActiveHint" timestamp="1601771269858">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="248" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601677278525" />
-    <state width="1515" height="248" key="GridCell.Tab.0.center" timestamp="1601677278525">
+    <state width="1534" height="440" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1601771269858" />
+    <state width="1515" height="166" key="GridCell.Tab.0.bottom" timestamp="1601772793183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="248" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601677278525" />
-    <state width="1515" height="248" key="GridCell.Tab.0.left" timestamp="1601677278525">
+    <state width="1515" height="166" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601772793183" />
+    <state width="1515" height="166" key="GridCell.Tab.0.center" timestamp="1601772793183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="248" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601677278525" />
-    <state width="1515" height="248" key="GridCell.Tab.0.right" timestamp="1601677278525">
+    <state width="1515" height="166" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1601772793183" />
+    <state width="1515" height="166" key="GridCell.Tab.0.left" timestamp="1601772793183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="248" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601677278525" />
-    <state width="1515" height="139" key="GridCell.Tab.1.bottom" timestamp="1601677229124">
+    <state width="1515" height="166" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1601772793183" />
+    <state width="1515" height="166" key="GridCell.Tab.0.right" timestamp="1601772793183">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="139" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601677229124" />
-    <state width="1515" height="139" key="GridCell.Tab.1.center" timestamp="1601677229124">
+    <state width="1515" height="166" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1601772793183" />
+    <state width="1515" height="239" key="GridCell.Tab.1.bottom" timestamp="1601771931211">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="139" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601677229124" />
-    <state width="1515" height="139" key="GridCell.Tab.1.left" timestamp="1601677229124">
+    <state width="1515" height="239" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1601771931211" />
+    <state width="1515" height="239" key="GridCell.Tab.1.center" timestamp="1601771931211">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="139" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601677229124" />
-    <state width="1515" height="139" key="GridCell.Tab.1.right" timestamp="1601677229124">
+    <state width="1515" height="239" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1601771931211" />
+    <state width="1515" height="239" key="GridCell.Tab.1.left" timestamp="1601771931211">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="139" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601677229124" />
+    <state width="1515" height="239" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1601771931211" />
+    <state width="1515" height="239" key="GridCell.Tab.1.right" timestamp="1601771931211">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="239" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1601771931211" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -212,6 +292,41 @@
           <url>file://$PROJECT_DIR$/traffic-sign-classification/3-attack/deepfool_cnn.py</url>
           <line>123</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/traffic-sign-classification/1-svm/extract.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/traffic-sign-classification/1-svm/train.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/traffic-sign-classification/1-svm/train.py</url>
+          <line>56</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/traffic-sign-classification/1-svm/train.py</url>
+          <line>50</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/traffic-sign-classification/3-attack/deepfool_cnn.py</url>
+          <line>71</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ART Tests/attack_mnist_sklearn_model_square_att.py</url>
+          <line>45</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/traffic-sign-classification/3-attack/fgsm_svm.py</url>
+          <line>121</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
