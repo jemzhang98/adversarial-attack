@@ -23,6 +23,9 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.svm import SVC
 from sklearn.utils import shuffle
 from sklearn.preprocessing import normalize
+from sklearn.metrics import accuracy_score
+
+
 
 tf.compat.v1.disable_eager_execution()
 
@@ -36,21 +39,20 @@ logger.addHandler(handler)
 
 # Read CIFAR10 dataset
 
-DATADIR = os.path.dirname(os.path.split(os.getcwd())[0]) + r"\Data\Train"
-CATEGORIES = ["i2", "i4"]
+DATADIR = "Testimage"
+CATEGORIES = ["i2","i4"]
 
 for categories in CATEGORIES:
-    path = os.path.join(DATADIR, categories)
+    path = os.path.join(DATADIR,categories)
     for img in os.listdir(path):
-        img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
-        # plt.imshow(img_array, cmap="gray")
-        # plt.show()
+        img_array = cv2.imread(os.path.join(path,img),cv2.IMREAD_GRAYSCALE)
+        plt.imshow(img_array,cmap = "gray")
+        plt.show()
         break
     break
 
-training_data = []
+training_data=[]
 IMG_SIZE = 50
-
 
 def create_training_data():
     for categories in CATEGORIES:
@@ -59,11 +61,10 @@ def create_training_data():
         for img in os.listdir(path):
             try:
                 img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
-                new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
-                training_data.append([new_array, class_num])
+                new_array = cv2.resize(img_array, (IMG_SIZE,IMG_SIZE))
+                training_data.append([new_array,class_num])
             except Exception as e:
                 pass
-
 
 create_training_data()
 
@@ -78,49 +79,23 @@ for features, label in training_data:
     X.append(features)
     y.append(label)
 
-X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1)
-X = X / 255
+X = np.array(X).reshape(-1,IMG_SIZE,IMG_SIZE, 1)
+X = X/255
 
-x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
-print('x_train', x_train)
+
+x_train,x_test,y_train,y_test = train_test_split(X,y, test_size=0.10)
+print('x_test',x_test)
+print('y_test',y_test)
 min_ = 0
 max_ = 1
 im_shape = x_train[0].shape
 
-# dataset_info = datasets.load_files(args.train_dir, None, None, False, False)
-#     raw_features = load_all_features(file_path=args.feat_dir, combined=True)
-#
-#     if args.validate:
-#         X_train_raw, X_test_raw, y_train, y_test = train_test_split(
-#             raw_features, dataset_info.target, test_size=1 - args.train_ratio, random_state=args.random_state)
-#     else:
-#         X_train_raw, y_train = shuffle(raw_features, dataset_info.target, random_state=args.random_state)
-#
-#     del raw_features
-#
-#     # LDA dimension reduction
-#     lda = LinearDiscriminantAnalysis(solver='eigen', shrinkage='auto', n_components=18)
-#     X_train = lda.fit_transform(X_train_raw, y_train)
-#     del X_train_raw
-#
-#     if args.validate:
-#         X_test = lda.transform(X_test_raw)
-#         del X_test_raw
-#
-#     # Normalize features
-#     X_train_n = normalize(X_train)
-#     if args.validate:
-#         X_test_n = normalize(X_test)
+# model_svc = SVC(kernel='rbf')
+# model_svc.fit(x_train,y_train)
+# model_predict = model_svc.predict(x_test)
+# acc = accuracy_score(y_test,model_predict)
 
 
-# (x_train, y_train), (x_test, y_test), min_, max_ = img_array
-# x_train, y_train = x_train[:50], y_train[:50]
-# x_test, y_test = x_test[:5], y_test[:5]
-# im_shape = x_train[0].shape
-
-
-# Create Keras convolutional neural network - basic architecture from Keras examples
-# Source here: https://github.com/keras-team/keras/blob/master/examples/cifar10_cnn.py
 model = Sequential()
 model.add(Conv2D(32, (3, 3), padding="same", input_shape=x_train.shape[1:]))
 model.add(Activation("relu"))
@@ -147,7 +122,7 @@ model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accur
 
 # Create classifier wrapper
 classifier = KerasClassifier(model=model, clip_values=(min_, max_))
-classifier.fit(x_train, y_train, nb_epochs=2, batch_size=100)
+classifier.fit(x_train, y_train, nb_epochs=10, batch_size=128)
 
 # Craft adversarial samples with DeepFool
 logger.info("Create DeepFool attack")
@@ -159,7 +134,7 @@ x_test_adv = adv_crafter.generate(x_test)
 
 # Evaluate the classifier on the adversarial samples
 preds = np.argmax(classifier.predict(x_test_adv), axis=1)
-acc = np.sum(preds == np.argmax(y_test, axis=1)) / y_test.shape[0]
+acc = np.sum(preds == y_test) / len(y_test)
 logger.info("Classifier before adversarial training")
 logger.info("Accuracy on adversarial samples: %.2f%%", (acc * 100))
 
@@ -173,6 +148,7 @@ classifier.fit(x_train, y_train, nb_epochs=10, batch_size=128)
 
 # Evaluate the adversarially trained classifier on the test set
 preds = np.argmax(classifier.predict(x_test_adv), axis=1)
-acc = np.sum(preds == np.argmax(y_test, axis=1)) / y_test.shape[0]
+acc = np.sum(preds == y_test) / len(y_test)
 logger.info("Classifier with adversarial training")
 logger.info("Accuracy on adversarial samples: %.2f%%", (acc * 100))
+
