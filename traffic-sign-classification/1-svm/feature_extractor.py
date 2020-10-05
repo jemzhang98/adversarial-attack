@@ -24,6 +24,11 @@ def extract_features(filenames) -> (np.ndarray, np.ndarray, np.ndarray, np.ndarr
         #does not cut out any of the image
         img_gray1: np.ndarray = cv2.cvtColor(cv2.resize(img, (28, 28)), cv2.COLOR_BGR2GRAY)
         img_gray2: np.ndarray = cv2.cvtColor(cv2.resize(img, (40, 40)), cv2.COLOR_BGR2GRAY)
+        # img_color: np.ndarray = cv2.resize(img, (40, 40))
+        # img_b, img_g, img_r = cv2.split(img_color)
+        # img_blue: np.ndarray = cv2.resize(img[:,:,0], (40, 40))
+        # img_green: np.ndarray = cv2.resize(img[:,:,0], (40, 40))
+        # img_red: np.ndarray = cv2.resize(img[:,:,0], (40, 40))
         #cv2.imshow('title'. img) #could show image
         #cv2.waitKey(0) #keep image up indefinitely
 

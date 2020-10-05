@@ -99,7 +99,8 @@ def get_pc1(folder_directory, folder_name):
   return statistics.mean(pc1_list)
 
 def main():
-  path_to_get = '../../Data/Train/'
+  # path_to_get = '../../Data/Train/'
+  path_to_get = '../../Augmented_Data/Train/'
   folders = ['w57', 'pl5', 'pl40', 'p5', 'p26', 'p11', 'io', 'pl30', 'pl80', 'pn', 'po', 'p23', 'i4', 'i2', 'i5', 'ip', 'pne', 'pl50', 'pl60']
   result = []
   for f in folders:
@@ -107,6 +108,8 @@ def main():
   y_pos = np.arange(len(folders))
   plt.bar(y_pos, result)
   plt.xticks(y_pos, folders)
+  plt.xlabel('Classes')
+  plt.ylabel('Percentage Variance Explained')
   plt.show()
 
 

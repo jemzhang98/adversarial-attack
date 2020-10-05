@@ -24,7 +24,7 @@ def getPixelInfo(image_path):
 
 def getAllPng(folderName):
   f = []
-  for (dirpath, dirnames, filenames) in walk('./Train/' + folderName):
+  for (dirpath, dirnames, filenames) in walk('../../Augmented_Data/Train/' + folderName):
     for filename in filenames:
       rel_dir = os.path.relpath(dirpath)
       rel_file = os.path.join(rel_dir, filename)
