@@ -6,6 +6,9 @@ from os import walk
 import os
 import matplotlib.pyplot as plt
 
+"""
+This file plots the RGBA analysis by class for train data
+"""
 
 def getPixelInfo(image_path):
 

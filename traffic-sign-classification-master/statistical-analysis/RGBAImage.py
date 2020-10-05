@@ -1,5 +1,9 @@
 import statistics
 
+"""
+This is a class for analysing RGBA images
+"""
+
 class RGBAImage:
   def __init__(self, pixelValue): # pass in list of pixels(tuples)
     self.pixelValue = pixelValue
