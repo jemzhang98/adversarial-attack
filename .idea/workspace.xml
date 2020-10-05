@@ -268,21 +268,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/traffic-sign-classification/3-attack/deepfool_cnn.py</url>
-          <line>87</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/traffic-sign-classification/3-attack/deepfool_cnn.py</url>
-          <line>69</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/traffic-sign-classification/3-attack/deepfool_cnn.py</url>
-          <line>123</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/traffic-sign-classification/1-svm/extract.py</url>
           <line>37</line>
           <option name="timeStamp" value="10" />
@@ -301,11 +286,6 @@
           <url>file://$PROJECT_DIR$/traffic-sign-classification/1-svm/train.py</url>
           <line>79</line>
           <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/traffic-sign-classification/3-attack/deepfool_cnn.py</url>
-          <line>71</line>
-          <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ART Tests/attack_mnist_sklearn_model_square_att.py</url>
