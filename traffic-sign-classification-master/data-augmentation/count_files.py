@@ -4,6 +4,9 @@ from os import walk
 from shutil import copyfile
 from PIL import Image
 
+"""
+This file will take the number of images we would like to have for each class and either take a subset or generate augmented image data to match the desired number.
+"""
 
 def countOfFiles():
   TrainOrTest = 'Train'

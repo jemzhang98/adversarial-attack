@@ -3,7 +3,9 @@ import os
 from os.path import join
 import matplotlib.pyplot as plt
 
-
+"""
+This file plots the number of files in Train data.
+"""
 folders = ['w57', 'pl5', 'pl40', 'p5', 'p26', 'p11', 'io', 'pl30', 'pl80', 'pn', 'po', 'p23', 'i4', 'i2', 'i5', 'ip', 'pne', 'pl50', 'pl60']
 
 path = '../../Augmented_Data/Train'
