@@ -10,6 +10,7 @@ import torchvision.transforms as transforms
 
 from art.estimators.classification import PyTorchClassifier
 from sklearn.model_selection import train_test_split
+from art.attacks.evasion import CarliniL2Method
 from torch.autograd import Variable
 from torch import nn
 from PIL import Image
@@ -42,6 +43,24 @@ def create_training_data():
         training_data[i][0] = img_rgb
 
 
+def calc_accuracy(predictions, y_test):
+    # Convert prediction to just the 4 interested class
+    convertedPred = []
+    for singlePrediction in predictions:
+        maxCompare = []
+        for location in labelLoc:
+            maxCompare.append(singlePrediction[location])
+        maxConfidence = max(maxCompare)
+        maxIndex = maxCompare.index(maxConfidence)
+        convertedPred.append(maxIndex)
+
+    # Calc accuracy of prediction
+    correctCount = 0
+    for i in range(len(convertedPred)):
+        if convertedPred[i] == y_test[i]:
+            correctCount += 1
+    acc = correctCount / len(convertedPred)
+    return acc
 
 # Set training dataset directory and limiting the numbers to 2 category
 # DATADIR = os.path.dirname(os.path.split(os.getcwd())[0]) + r"\Data\Train"
@@ -89,32 +108,20 @@ for features, label in training_data:
 
 # Since we're using pretrained mode, we really don't need to do the test/train split lol
 X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
-x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 x_test = x_test.astype('float32')
 # PyTorch takes in input in shape of [N, Channel, H, W], while the input had channel in the last index
 x_test_n = x_test.reshape((x_test.shape[0], x_test.shape[-1], IMG_SIZE, IMG_SIZE))
 predictions = classifier.predict(x_test_n)
 
-# Convert prediction to just the 4 interested class
-convertedPred = []
-for singlePrediction in predictions:
-    maxCompare = []
-    for location in labelLoc:
-        maxCompare.append(singlePrediction[location])
-    maxConfidence = max(maxCompare)
-    maxIndex = maxCompare.index(maxConfidence)
-    convertedPred.append(maxIndex)
-
-# Calc accuracy of prediction
-correctCount = 0
-for i in range(len(convertedPred)):
-    if convertedPred[i] == y_test[i]:
-        correctCount += 1
-acc = correctCount / len(convertedPred)
+acc = calc_accuracy(predictions, y_test)
 print("Accuracy on benign test examples: {}%".format(acc * 100))
 
+attack = CarliniL2Method(classifier=classifier, targeted=False)
+x_test_adv = attack.generate(x=x_test_n)
+
+advPredictions = classifier.predict(x_test_n)
+advAcc = calc_accuracy(advPredictions, y_test)
+print("Accuracy for adversarial images: {}%".format(advAcc * 100))
+
 # TODO: figure out how to display the adv image?
-
-print('lol')
-
-
