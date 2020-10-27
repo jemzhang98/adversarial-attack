@@ -76,7 +76,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.deepfool_SVM">
+  <component name="RunManager" selected="Python.deepfool_cnn (1)">
     <configuration name="Boundary_cnn" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="adversarial-attack" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -184,8 +184,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.deepfool_SVM" />
         <item itemvalue="Python.deepfool_cnn (1)" />
+        <item itemvalue="Python.deepfool_SVM" />
         <item itemvalue="Python.Boundary_cnn" />
         <item itemvalue="Python.fgsm_svm" />
         <item itemvalue="Python.attack_mnist_sklearn_model_square_att" />
