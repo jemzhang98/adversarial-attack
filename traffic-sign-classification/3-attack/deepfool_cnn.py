@@ -167,3 +167,4 @@ save(r'./Generated Adversarial Data/deepfool_cnn_adv.npy', x_test_adv)
 advPredictions = classifier.predict(x_test_adv)
 advAcc = calc_accuracy(advPredictions, y_test)
 print("Accuracy for adversarial images: {}%".format(advAcc * 100))
+
