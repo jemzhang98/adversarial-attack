@@ -82,22 +82,12 @@ def transformPred(predictions):
         convertedPred.append(maxIndex)
     return convertedPred
 
+# Ignore this, this is only needed ot get the y_test labels.
 x_test_adv = np.load(r'../3-attack/Generated Adversarial Data/cw_svm_adv_colour.npy')
 IMG_SIZE = 48
 normalImgs = svm2Normal(x_test_adv)
 resizedImgs = loopNpArray(normalImgs)
 resizedImgs = resizedImgs * 255
-
-# show or save image
-# count = 0
-# saveLocation = r'./cwSVM/'
-# for img in resizedImgs:
-#     im = Image.fromarray(img.astype(np.uint8))
-#     im.save(saveLocation + str(count) + ".png")
-#     # plt.imshow(img)
-#     # plt.show()
-#     count += 1
-#     print(count)
 
 # Convert to CNN input
 # The original model was trained with these normalization values, need to use these to ensure to get a similar result
@@ -114,16 +104,11 @@ originalCat = ['i2', 'i4', 'i5', 'io', 'ip', 'p11', 'p23', 'p26', 'p5', 'pl30',
               'pl40', 'pl5', 'pl50', 'pl60', 'pl80', 'pn', 'pne', 'po', 'w57']
 create_testing_data()
 
-X_testing = []
 y_testing = []
 
 for features, label in testing_data:
-    X_testing.append(features)
     y_testing.append(label)
 
-X_testing = np.array(X_testing).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
-
-x_test = X_testing
 y_test = y_testing
 
 # Load CNN model
@@ -141,8 +126,6 @@ classifier = PyTorchClassifier(model=model,
                                loss=loss,
                                input_shape=(3, 48, 48),
                                nb_classes=19)
-
-# x_test_n = x_test.reshape((x_test.shape[0], x_test.shape[-1], IMG_SIZE, IMG_SIZE))
 
 x_test_n = np.load(r'../3-attack/Generated Adversarial Data/cw_cnn_adv_colour.npy')
 # If the batch size is not set (predict all at once), sometimes it throws an error for CUDA out of memory. Which is why
@@ -181,11 +164,3 @@ for trafficClass in totalPerClass:
     for details in detailedError[trafficClass]:
         incorrectPercentage = str(round(float(detailedError[trafficClass][details] / totalIncorrect), 2) * 100) + '%'
         print(" ", incorrectPercentage, ',', detailedError[trafficClass][details], 'images misclassified as', CATEGORIES[details])
-
-
-# For each class, calculate the % of error that are misclassified as a certian class
-# Get error per class
-
-# acc = calc_accuracy(predictions, y_test)
-
-# print("Accuracy: {}%".format(acc * 100))
