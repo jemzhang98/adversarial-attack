@@ -144,6 +144,7 @@ classifier = PyTorchClassifier(model=model,
 
 # x_test_n = x_test.reshape((x_test.shape[0], x_test.shape[-1], IMG_SIZE, IMG_SIZE))
 
+# x_test_n = np.load(r'../3-attack/Generated Adversarial Data/cw_cnn_adv_colour.npy')
 x_test_n = np.load(r'../3-attack/Generated Adversarial Data/cw_cnn_adv_colour.npy')
 # If the batch size is not set (predict all at once), sometimes it throws an error for CUDA out of memory. Which is why
 # i've set a limit
@@ -182,10 +183,5 @@ for trafficClass in totalPerClass:
         incorrectPercentage = str(round(float(detailedError[trafficClass][details] / totalIncorrect), 2) * 100) + '%'
         print(" ", incorrectPercentage, ',', detailedError[trafficClass][details], 'images misclassified as', CATEGORIES[details])
 
-
-# For each class, calculate the % of error that are misclassified as a certian class
-# Get error per class
-
-# acc = calc_accuracy(predictions, y_test)
-
-# print("Accuracy: {}%".format(acc * 100))
+acc = calc_accuracy(predictions, y_test)
+print("Accuracy: {}%".format(acc * 100))

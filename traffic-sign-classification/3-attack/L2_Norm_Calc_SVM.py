@@ -15,6 +15,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from numpy import save
 from PIL import Image
+import matplotlib.pyplot as plt
 
 
 def svm2Normal(input_image):
@@ -91,20 +92,31 @@ for features, label in testing_data:
 
 
 X_testing = np.array(X_testing).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
-# X_testing = X_testing / 255
+X_testing = X_testing / 255
 
 x_test = X_testing
 y_test = y_testing
 
 x_test_n = np.load(r'../3-attack/Generated Adversarial Data/cw_svm_adv_colour.npy')
+# x_test_n = np.load(r'../3-attack/Generated Adversarial Data/BIM_svm_adv.npy')
 normalImgs = svm2Normal(x_test_n)
 resizedImgs = loopNpArray(normalImgs)
-resizedImgs = resizedImgs * 255
+# resizedImgs = resizedImgs * 255
 
 allDist = []
 count = 0
 for cleanImage in x_test:
-    dist = np.linalg.norm(resizedImgs[count] - cleanImage)
+    singleImageDist = []
+    for c in range(3):
+        singleChannelAdv = resizedImgs[count][..., c]
+        singleChannelClean = cleanImage[..., c]
+        dist = np.linalg.norm(singleChannelAdv - singleChannelClean)
+        singleImageDist.append(dist)
+    dist = statistics.mean(singleImageDist)
+    # plt.imshow(resizedImgs[count])
+    # plt.show()
+    # plt.imshow(cleanImage)
+    # plt.show()
     print('Dist is', dist)
     allDist.append(dist)
     count += 1
