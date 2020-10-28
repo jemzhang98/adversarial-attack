@@ -82,6 +82,7 @@ def transformPred(predictions):
         convertedPred.append(maxIndex)
     return convertedPred
 
+
 # Ignore this, this is only needed ot get the y_test labels.
 x_test_adv = np.load(r'../3-attack/Generated Adversarial Data/cw_svm_adv_colour.npy')
 IMG_SIZE = 48
@@ -160,7 +161,8 @@ for trafficClass in totalPerClass:
     print("", CATEGORIES[trafficClass], str(accuracyPerClass[CATEGORIES[trafficClass]]* 100) + '%,'
           , correctPerClass[trafficClass], 'out of', totalPerClass[trafficClass])
     totalIncorrect = totalPerClass[trafficClass] - correctPerClass[trafficClass]
-    print("  Out of", totalIncorrect, "incorrect images:")
-    for details in detailedError[trafficClass]:
-        incorrectPercentage = str(round(float(detailedError[trafficClass][details] / totalIncorrect), 2) * 100) + '%'
-        print(" ", incorrectPercentage, ',', detailedError[trafficClass][details], 'images misclassified as', CATEGORIES[details])
+    if totalIncorrect != 0:
+        print("  Out of", totalIncorrect, "incorrect images:")
+        for details in detailedError[trafficClass]:
+            incorrectPercentage = str(round(float(detailedError[trafficClass][details] / totalIncorrect), 2) * 100) + '%'
+            print(" ", incorrectPercentage, ',', detailedError[trafficClass][details], 'images misclassified as', CATEGORIES[details])
