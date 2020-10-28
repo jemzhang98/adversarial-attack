@@ -56,7 +56,8 @@ class UnNormalize(object):
 IMG_SIZE = 48
 x_test_adv = np.load(r'../3-attack/Generated Adversarial Data/cw_cnn_adv_colour.npy')
 # To make it channel first
-x_test_adv = np.array(x_test_adv).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
+# x_test_adv = np.array(x_test_adv).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
+x_test_adv = np.moveaxis(x_test_adv, 1, -1)
 
 # Transformation to tensor
 transform = transforms.Compose(

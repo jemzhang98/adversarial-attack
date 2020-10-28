@@ -138,7 +138,7 @@ for features, label in testing_data:
 
 # Since we're using pretrained mode, we really don't need to do the test/train split lol
 X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
-X_testing = np.array(X_testing).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
+X_testing = np.moveaxis(X_testing, 1, -1)
 
 x_train = X
 y_train = y
@@ -166,6 +166,7 @@ for i in range(x_test.shape[0]):
         plt.imshow(img_rgb)
         plt.show()
     x_test[count] = img_rgb
+
     count += 1
     print(count)
 
