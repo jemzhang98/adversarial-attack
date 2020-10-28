@@ -30,7 +30,9 @@ def create_training_data():
 #read in images and class labels for test data
 def create_testing_data():
     path = DATADIR_TEST
+    # i = 0
     for img in os.listdir(path):
+    # while i < 10:
         try:
             class_name = img.split('_')[0]
             class_num = CATEGORIES.index(class_name)
@@ -38,6 +40,7 @@ def create_testing_data():
             img_array = np.array(Image.open(os.path.join(path, img)).convert('RGB')) # remove the a channel
             new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
             testing_data.append([new_array, class_num])
+            # i += 1
         except Exception as e:
             pass
 
@@ -86,9 +89,14 @@ for features, label in training_data:
     X.append(features)
     y.append(label)
 
+# count = 0
 for features, label in testing_data:
     X_testing.append(features)
     y_testing.append(label)
+    # if label == 1:
+    #     count += 1
+
+# print('count', count)
 
 
 X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
@@ -113,6 +121,7 @@ model = SVC(C=1.0, kernel="rbf")
 classifier = SklearnClassifier(model=model, clip_values=(0, 1))
 x_train_n = transform2Grey(x_train)
 x_test_n = transform2Grey(x_test)
+print(x_test_n.shape)
 
 # save to npy file
 print('Saving testing data')
@@ -128,7 +137,7 @@ accuracy = np.sum(np.argmax(predictions, axis=1) == np.argmax(y_test_n, axis=1))
 print("Accuracy on benign test examples: {}%".format(accuracy * 100))
 # Step 6: Generate adversarial test examples
 # attack = UniversalPerturbation(classifier=classifier, attacker='fgsm', norm=2)
-attack = BoundaryAttack(estimator=classifier, targeted=False)
+attack = BoundaryAttack(estimator=classifier, targeted=False, max_iter=500, num_trial=10, delta=0.1, epsilon=0.1)
 
 x_test_adv = attack.generate(x=x_test_n)
 

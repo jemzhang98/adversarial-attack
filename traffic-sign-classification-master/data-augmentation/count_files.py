@@ -79,7 +79,7 @@ def generate_data (src_dir, dest_dir, folder_name, count):
 
 def augment_data(folder_name):
   path = '../../Data/Train/' + folder_name
-  threshold = 50
+  threshold = 25
   src = path
   dest = join('../../Augmented_Data/Train/' + folder_name)
   if (len(os.listdir(path)) > threshold):
