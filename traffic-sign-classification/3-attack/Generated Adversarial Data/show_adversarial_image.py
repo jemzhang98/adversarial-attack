@@ -2,7 +2,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-filePath = r'.\square_svm_adv.npy'
+# filePath = r'.\square_svm_adv.npy'
+filePath = './boundary_svm_adv.npy'
 advData = np.load(filePath)
 if advData.dtype != np.uint8 and advData.shape[3] != 1:
     advData = advData.astype(np.uint8)
