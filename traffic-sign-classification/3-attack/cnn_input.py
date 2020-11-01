@@ -128,7 +128,7 @@ classifier = PyTorchClassifier(model=model,
                                input_shape=(3, 48, 48),
                                nb_classes=19)
 
-x_test_n = np.load(r'../3-attack/Generated Adversarial Data/cw_cnn_adv_colour.npy')
+x_test_n = np.load(r'../3-attack/Generated Adversarial Data/fgsm_cnn_adv_colour.npy')
 # If the batch size is not set (predict all at once), sometimes it throws an error for CUDA out of memory. Which is why
 # i've set a limit
 predictions = classifier.predict(x_test_n, batch_size=100)
@@ -142,7 +142,7 @@ for truth in y_test:
         totalPerClass[truth] += 1
 correctPerClass = copy.deepcopy(totalPerClass)
 detailedError = {}
-for i in range(len(y_test)):
+for i in range(len(transformedPred)):
     if transformedPred[i] != y_test[i]:
         correctPerClass[y_test[i]] -= 1
         # Record the error details for later computation
@@ -158,11 +158,11 @@ accuracyPerClass = {}
 print("CNN's accuracy with CW input:")
 for trafficClass in totalPerClass:
     accuracyPerClass[CATEGORIES[trafficClass]] = float(correctPerClass[trafficClass] / totalPerClass[trafficClass])
-    print("", CATEGORIES[trafficClass], str(accuracyPerClass[CATEGORIES[trafficClass]]* 100) + '%,'
+    print("    ", CATEGORIES[trafficClass], str(accuracyPerClass[CATEGORIES[trafficClass]]* 100) + '%,'
           , correctPerClass[trafficClass], 'out of', totalPerClass[trafficClass])
     totalIncorrect = totalPerClass[trafficClass] - correctPerClass[trafficClass]
     if totalIncorrect != 0:
-        print("  Out of", totalIncorrect, "incorrect images:")
+        print("            Out of", totalIncorrect, "incorrect images:")
         for details in detailedError[trafficClass]:
             incorrectPercentage = str(round(float(detailedError[trafficClass][details] / totalIncorrect), 2) * 100) + '%'
-            print(" ", incorrectPercentage, ',', detailedError[trafficClass][details], 'images misclassified as', CATEGORIES[details])
+            print("            ", incorrectPercentage, ',', detailedError[trafficClass][details], 'images misclassified as', CATEGORIES[details])
