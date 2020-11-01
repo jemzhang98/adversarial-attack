@@ -1,6 +1,6 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import logging
+
 import random
 import numpy as np
 import copy
@@ -8,12 +8,14 @@ import os
 import cv2
 import tensorflow as tf
 
-from art.attacks.evasion import CarliniL2Method, UniversalPerturbation, BoundaryAttack
+from art.attacks.evasion import CarliniL2Method
 from art.estimators.classification import KerasClassifier, SklearnClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from numpy import save
 from PIL import Image
+from sklearn.externals import joblib
+from pathlib import Path
 
 
 # read in images and class labels for training data
@@ -66,7 +68,14 @@ def convertLabel(labels):
 
     return outputLabels
 
+
+svmModelLoc = r'./Model/trained_svm.model'
+advDataLoc = r'./Generated Adversarial Data/cw_svm_adv_colour.npy'
+
+# Only train the model if the model cannot be found
+
 # Set training dataset directory and limiting the numbers to 2 category
+print('Loading images...')
 DATADIR_TRAIN = os.path.dirname(os.path.split(os.getcwd())[0]) + r"/Final_Data/Train"
 DATADIR_TEST = os.path.dirname(os.path.split(os.getcwd())[0]) + r"/Final_Data/Test"
 CATEGORIES = ['i2', 'i4', 'i5', 'io', 'p11', 'p26', 'pl5', 'pl30', 'pl40', 'pl50']
@@ -112,7 +121,7 @@ im_shape = x_train[0].shape
 model = SVC(C=1.0, kernel="rbf")
 
 # Step 3: Create the ART classifier
-classifier = SklearnClassifier(model=model, clip_values=(0, 1))
+
 x_train_n = transform2Grey(x_train)
 x_test_n = transform2Grey(x_test)
 
@@ -122,21 +131,54 @@ x_test_n = transform2Grey(x_test)
 
 y_train_n = convertLabel(y_train)
 y_test_n = convertLabel(y_test)
-# Step 4: Train the ART classifier
-classifier.fit(x_train_n, y_train_n)
+
+if not (Path(svmModelLoc).is_file()):
+    classifier = SklearnClassifier(model=model, clip_values=(0, 1))
+    classifier.fit(x_train_n, y_train_n)
+
+    # save to trained SVM model
+    print('Saving SVM model...')
+    joblib.dump(classifier, svmModelLoc)
+else:
+    print('Loading trained SVM model...')
+    classifier = joblib.load(svmModelLoc)
+
+print('Predicting image classes...')
 predictions = classifier.predict(x_test_n)
 accuracy = np.sum(np.argmax(predictions, axis=1) == np.argmax(y_test_n, axis=1)) / len(y_test_n)
 
-print("Accuracy on benign test examples: {}%".format(accuracy * 100))
-# Step 6: Generate adversarial test examples
-attack = CarliniL2Method(classifier=classifier, targeted=False)
+incorrectIndex = []
+for i in range(len(y_test_n)):
+    if not (predictions[i] == y_test_n[i]).all():
+        incorrectIndex.append(i)
 
-x_test_adv = attack.generate(x=x_test_n, targeted=False)
+print("Original Accuracy: {}%".format(accuracy * 100))
 
-# save to npy file
-print('Saving generated adv data')
-save(r'./Generated Adversarial Data/cw_svm_adv_colour.npy', x_test_adv)
+regenerateAtk = False
+if (regenerateAtk and Path(advDataLoc).is_file()):
+    attack = CarliniL2Method(classifier=classifier, targeted=False)
 
-# Step 7: Evaluate the ART classifier on adversarial test examples
+    x_test_adv = attack.generate(x=x_test_n, targeted=False)
+
+    # save to npy file
+    print('Saving generated adv data')
+    save(r'./Generated Adversarial Data/cw_svm_adv_colour.npy', x_test_adv)
+else:
+    print('Loading adversarial output...')
+    x_test_adv = np.load(advDataLoc)
+
 x_test_adv_flat = transform2Grey(x_test_adv)
 predictions = classifier.predict(x_test_adv_flat)
+
+advAccuracy = np.sum(np.argmax(predictions, axis=1) == np.argmax(y_test_n, axis=1)) / len(y_test_n)
+print("Raw Adv Accuracy: {}%".format(advAccuracy * 100))
+
+# Adjust the adv accuracy calc so that it excludes ones that were misclassified to start with
+correctCount = 0
+for i in range(len(predictions)):
+    if i not in incorrectIndex and (predictions[i] == y_test_n[i]).all():
+        correctCount += 1
+adjAccuracy = correctCount / (len(y_test_n) - len(incorrectIndex))
+print("Adjusted Adv Accuracy is: {}%".format(adjAccuracy * 100))
+print("The adv images has decreased the accuracy by: {}%".format((1 - adjAccuracy) * 100))
+
