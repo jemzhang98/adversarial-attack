@@ -64,7 +64,7 @@ def create_testing_data():
         testing_data[i][0] = img_rgb
 
 def calc_accuracy(predictions, y_test):
-    # Convert prediction to just the 4 interested class
+    # Convert prediction to just the 10 interested class
     convertedPred = []
     for singlePrediction in predictions:
         maxCompare = []
@@ -112,7 +112,8 @@ loss = nn.NLLLoss()
 classifier = PyTorchClassifier(model=model,
                                loss=loss,
                                input_shape=(3, 48, 48),
-                               nb_classes=19)
+                               nb_classes=19,
+                               device_type='gpu')
 
 # The original model was trained with these normalization values, need to use these to ensure to get a similar result
 transform = transforms.Compose(
@@ -157,13 +158,19 @@ predictions = classifier.predict(x_test_n)
 acc = calc_accuracy(predictions, y_test)
 print("Accuracy on benign test examples: {}%".format(acc * 100))
 
-# attack = CarliniL2Method(classifier=classifier, targeted=False)
-attack = DeepFool(classifier=classifier)
+attack = CarliniL2Method(classifier=classifier,
+                         confidence=0.15,
+                         targeted=False,
+                         max_iter=100,
+                         max_halving=50,
+                         learning_rate=0.2,
+                         batch_size=1)
+# attack = DeepFool(classifier=classifier)
 x_test_adv = attack.generate(x=x_test_n)
 
 # save to npy file
 print('Saving generated adv data')
-save(r'./Generated Adversarial Data/dpf_cnn_adv_colour.npy', x_test_adv)
+save(r'./Generated Adversarial Data/cw_cnn_adv_colour.npy', x_test_adv)
 # x_test_adv = np.load(r'./Generated Adversarial Data/cw_svm_adv_colour.npy')
 # for x_tmp in x_test_adv:
 #     tmp = x_tmp.reshape(50, 50, 3).T

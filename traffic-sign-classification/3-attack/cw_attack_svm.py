@@ -3,28 +3,46 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import logging
 import random
 import numpy as np
+import copy
 import os
 import cv2
 import tensorflow as tf
 
-from art.attacks.evasion import CarliniL2Method, UniversalPerturbation
+from art.attacks.evasion import CarliniL2Method, UniversalPerturbation, BoundaryAttack
 from art.estimators.classification import KerasClassifier, SklearnClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from numpy import save
+from PIL import Image
 
 
+# read in images and class labels for training data
 def create_training_data():
     for categories in CATEGORIES:
-        path = os.path.join(DATADIR, categories)
+        path = os.path.join(DATADIR_TRAIN, categories)
         class_num = CATEGORIES.index(categories)
         for img in os.listdir(path):
             try:
-                img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_COLOR)
+                # img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
+                img_array = np.array(Image.open(os.path.join(path, img)).convert('RGB')) # remove the a channel
                 new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
                 training_data.append([new_array, class_num])
             except Exception as e:
                 pass
+
+#read in images and class labels for test data
+def create_testing_data():
+    path = DATADIR_TEST
+    for img in os.listdir(path):
+        try:
+            class_name = img.split('_')[0]
+            class_num = CATEGORIES.index(class_name)
+            # img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
+            img_array = np.array(Image.open(os.path.join(path, img)).convert('RGB')) # remove the a channel
+            new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
+            testing_data.append([new_array, class_num])
+        except Exception as e:
+            pass
 
 
 def transform2Grey(input_image):
@@ -33,9 +51,7 @@ def transform2Grey(input_image):
 
 
 def create_features(img):
-    # flatten three channel color image
     color_features = img.flatten()
-    # combine color and hog features into a single array
     flat_features = np.hstack(color_features)
     return flat_features
 
@@ -51,44 +67,43 @@ def convertLabel(labels):
     return outputLabels
 
 # Set training dataset directory and limiting the numbers to 2 category
-DATADIR = os.path.dirname(os.path.split(os.getcwd())[0]) + r"\Augmented_Data\Train"
-CATEGORIES = ['i4', 'pl30', 'pl80', 'w57']
+DATADIR_TRAIN = os.path.dirname(os.path.split(os.getcwd())[0]) + r"/Final_Data/Train"
+DATADIR_TEST = os.path.dirname(os.path.split(os.getcwd())[0]) + r"/Final_Data/Test"
+CATEGORIES = ['i2', 'i4', 'i5', 'io', 'p11', 'p26', 'pl5', 'pl30', 'pl40', 'pl50']
 IMG_SIZE = 50
 
 tf.compat.v1.disable_eager_execution()
 
-# Configure a logger to capture ART outputs; these are printed in console and the level of detail is set to INFO
-# logger = logging.getLogger()
-# logger.setLevel(logging.INFO)
-# handler = logging.StreamHandler()
-# formatter = logging.Formatter("[%(levelname)s] %(message)s")
-# handler.setFormatter(formatter)
-# logger.addHandler(handler)
-
-# for categories in CATEGORIES:
-#     path = os.path.join(DATADIR, categories)
-#     for img in os.listdir(path):
-#         img_array = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
-#         # plt.imshow(img_array, cmap="gray")
-#         # plt.show()
-#         break
-#     break
-
 training_data = []
+testing_data = []
 create_training_data()
+create_testing_data()
 random.shuffle(training_data)
 
 X = []
 y = []
+X_testing = []
+y_testing = []
 
 for features, label in training_data:
     X.append(features)
     y.append(label)
 
+for features, label in testing_data:
+    X_testing.append(features)
+    y_testing.append(label)
+
+
 X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
 X = X / 255
+X_testing = np.array(X_testing).reshape(-1, IMG_SIZE, IMG_SIZE, 3)
+X_testing = X_testing / 255
 
-x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.20)
+x_train = X
+y_train = y
+x_test = X_testing
+y_test = y_testing
+
 min_ = 0
 max_ = 1
 im_shape = x_train[0].shape
@@ -114,19 +129,14 @@ accuracy = np.sum(np.argmax(predictions, axis=1) == np.argmax(y_test_n, axis=1))
 
 print("Accuracy on benign test examples: {}%".format(accuracy * 100))
 # Step 6: Generate adversarial test examples
-# attack = UniversalPerturbation(classifier=classifier, attacker='fgsm', norm=2)
-# attack = CarliniL2Method(classifier=classifier, targeted=False,  delta=0.2, max_iter=20, eps=10.0, batch_size=32)
-attack = UniversalPerturbation(classifier=classifier, attacker='carlini')
+attack = CarliniL2Method(classifier=classifier, targeted=False)
 
-x_test_adv = attack.generate(x=x_test_n)
+x_test_adv = attack.generate(x=x_test_n, targeted=False)
 
 # save to npy file
-# print('Saving generated adv data')
-# save(r'./Generated Adversarial Data/boundary_svm_adv.npy', x_test_adv)
+print('Saving generated adv data')
+save(r'./Generated Adversarial Data/cw_svm_adv_colour.npy', x_test_adv)
 
 # Step 7: Evaluate the ART classifier on adversarial test examples
 x_test_adv_flat = transform2Grey(x_test_adv)
 predictions = classifier.predict(x_test_adv_flat)
-accuracy = np.sum(np.argmax(predictions, axis=1) == np.argmax(y_test_n, axis=1)) / len(y_test_n)
-print("Accuracy on adversarial test examples: {}%".format(accuracy * 100))
-
