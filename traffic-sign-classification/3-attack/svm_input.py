@@ -135,7 +135,7 @@ print('Creating model')
 classifier = SklearnClassifier(model=model, clip_values=(0, 1))
 classifier.fit(x_train_n, y_train_n)
 print('Creating model done')
-x_test_n = np.load(r'../3-attack/Generated Adversarial Data/cw_svm_adv_colour.npy')
+x_test_n = np.load(r'../3-attack/Generated Adversarial Data/BIM_svm_adv.npy')
 predictions = classifier.predict(x_test_n)
 transformedPred = transformPred(predictions)
 totalPerClass = {}
@@ -159,14 +159,14 @@ for i in range(len(y_test)):
             else:
                 detailedError[y_test[i]][transformedPred[i]] += 1
 accuracyPerClass = {}
-print("CNN's accuracy with CW input:")
+print("SVM's accuracy with CW input:")
 for trafficClass in totalPerClass:
     accuracyPerClass[CATEGORIES[trafficClass]] = float(correctPerClass[trafficClass] / totalPerClass[trafficClass])
-    print("", CATEGORIES[trafficClass], str(accuracyPerClass[CATEGORIES[trafficClass]]* 100) + '%,'
+    print("    ", CATEGORIES[trafficClass], str(accuracyPerClass[CATEGORIES[trafficClass]]* 100) + '%,'
           , correctPerClass[trafficClass], 'out of', totalPerClass[trafficClass])
     totalIncorrect = totalPerClass[trafficClass] - correctPerClass[trafficClass]
     if totalIncorrect != 0:
-        print("  Out of", totalIncorrect, "incorrect images:")
+        print("            Out of", totalIncorrect, "incorrect images:")
         for details in detailedError[trafficClass]:
             incorrectPercentage = str(round(float(detailedError[trafficClass][details] / totalIncorrect), 2) * 100) + '%'
-            print(" ", incorrectPercentage, ',', detailedError[trafficClass][details], 'images misclassified as', CATEGORIES[details])
+            print("            ", incorrectPercentage, ',', detailedError[trafficClass][details], 'images misclassified as', CATEGORIES[details])
